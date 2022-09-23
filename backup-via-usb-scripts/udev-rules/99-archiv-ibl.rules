@@ -1,0 +1,1 @@
+KERNEL=="sd?1", ATTRS{serial}=="5743415A414B303138363939", RUN+="/usr/local/bin/mount_and_check_disk.sh $name /media/archive_ibl"

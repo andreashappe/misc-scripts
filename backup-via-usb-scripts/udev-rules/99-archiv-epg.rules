@@ -1,0 +1,1 @@
+KERNEL=="sd?1", ATTRS{serial}=="574D43315431363934383331", RUN+="/usr/local/bin/mount_and_check_disk.sh $name /media/archive_epg"
