@@ -1,0 +1,45 @@
+---
+- hosts: wireguard
+  gather_facts: true
+  vars:
+    internal_network: 192.168.200.1/24
+    listen_port: 8888
+  tasks:
+    - name: Update packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+        autoremove: yes
+    - name: Update apt cache and install wireguard
+      apt:
+        name: "{{ item }}"
+      loop:
+        - wireguard
+    - name: Uninstall some packages (some functionality will be provided by systemd)
+      apt:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - cron
+        - rsyslog
+        - installation-report
+        - reportbug
+    - name: generate wireguard server keys
+      shell: "{{ item }}"
+      with_items:
+        - wg genkey | tee /etc/wireguard/private.key
+        - cat /etc/wireguard/private.key | wg pubkey | tee /etc/wireguard/public.key
+    - name: get private key
+      slurp:
+        src: /etc/wireguard/private.key
+      register: private_key
+    - debug: var=private_key
+    - name: generate wireguard configuration file
+      template:
+        src: wireguard.conf.j2
+        dest: /etc/wireguard/wg0.conf
+    - name: enable wireguard systemd config
+      systemd:
+        name: wg-quick@wg0
+        state: started
+        enabled: yes
