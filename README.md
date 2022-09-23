@@ -1,7 +1,7 @@
 # misc-scripts
 Collection of assorted scripts that I use for work and university
 
-| Script | Description |
+| Script | Last Update | Description |
 | --- | --- |
-| fortinet-fw/cofig-parser.py | parses a fortinet firewall configuration and creates an excel sheet with the rule data |
-| backup-via-usb-scripts | use udev and bash scripts to perform incremental backups on connected usb devices |
+| fortinet-fw/cofig-parser.py | 2022 | parses a fortinet firewall configuration and creates an excel sheet with the rule data |
+| backup-via-usb-scripts | 2013 | use udev and bash scripts to perform incremental backups on connected usb devices |
